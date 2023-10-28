@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+
+    >
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Назад"
+        android:textSize="18sp"
+        android:layout_gravity="start"
+        android:contentDescription="Назад"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Таймер"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/timerDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00.00"
+        android:textSize="36sp"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Старт"
+        />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Стоп"
+        android:enabled="false"
+        />
+
+    <Button
+        android:id="@+id/pauseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Пауза"
+        android:enabled="false"
+        />
+
+    <Button
+        android:id="@+id/lapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Коло"
+        android:enabled="false"
+        />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Скидання"
+        android:enabled="false"
+        />
+
+    <ScrollView
+        android:id="@+id/lapListScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/lapList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Кола:\n"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:padding="16dp" />
+    </ScrollView>
+
+
+</LinearLayout>

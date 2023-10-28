@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textClock"
+                style="@style/MyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:text="00:00:00" />
+
+            <TextView
+                android:id="@+id/textDate"
+                style="@style/MyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="January 01, 2023" />
+
+            <TextView
+                android:id="@+id/textTimeZone"
+                style="@style/MyTextStyle"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="Time Zone: Europe/Kiev" />
+
+            <Button
+                android:id="@+id/buttonTimer"
+                style="@style/MyButtonStyle"
+                android:text="Таймер"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_border" />
+
+            <Button
+                android:id="@+id/buttonSettings"
+                style="@style/MyButtonStyle"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Налаштування"
+                android:background="@drawable/button_border" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
