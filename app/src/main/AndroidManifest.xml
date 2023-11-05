@@ -14,26 +14,20 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ClockActivity" />
-
-        <activity
-            android:name=".TimerActivity" />
-
-        <activity
-            android:name=".SettingsActivity" />
-
-        <activity
-            android:name=".SplashActivity"
-            android:theme="@style/Theme.Design.NoActionBar"
+            android:name=".ClockContainerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".Service.TimerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="stu.cn.ua.clock_variant_10_yura_dmytriv.Service.TimerService" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>

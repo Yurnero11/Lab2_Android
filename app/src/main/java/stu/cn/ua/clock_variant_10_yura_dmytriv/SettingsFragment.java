@@ -1,6 +1,5 @@
 package stu.cn.ua.clock_variant_10_yura_dmytriv;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 
-public class SettingsActivity extends Fragment {
+public class SettingsFragment extends Fragment {
     private static final String PREFS_NAME = "MyPrefs";
     private static final String TIME_ZONE_KEY = "timeZone";
 

@@ -6,17 +6,22 @@
     import android.content.ServiceConnection;
     import android.os.Bundle;
     import android.os.IBinder;
+    import android.view.LayoutInflater;
     import android.view.View;
+    import android.view.ViewGroup;
     import android.widget.Button;
     import android.widget.ScrollView;
     import android.widget.TextView;
+
+    import androidx.fragment.app.Fragment;
+    import androidx.fragment.app.FragmentTransaction;
 
     import java.util.ArrayList;
 
     import stu.cn.ua.clock_variant_10_yura_dmytriv.Service.ITimerObserver;
     import stu.cn.ua.clock_variant_10_yura_dmytriv.Service.TimerService;
 
-    public class TimerActivity extends Activity implements ITimerObserver {
+    public class TimerFragment extends Fragment implements ITimerObserver {
         private TimerService timerService;
         private boolean isServiceBound = false;
 
@@ -33,16 +38,15 @@
         private ArrayList<Long> lapTimes = new ArrayList<>();
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.timer_fragment);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.timer_fragment, container, false);
 
-            timerDisplay = findViewById(R.id.timerDisplay);
-            startButton = findViewById(R.id.startButton);
-            stopButton = findViewById(R.id.stopButton);
-            pauseButton = findViewById(R.id.pauseButton);
-            lapButton = findViewById(R.id.lapButton);
-            resetButton = findViewById(R.id.resetButton);
+            timerDisplay = view.findViewById(R.id.timerDisplay);
+            startButton = view.findViewById(R.id.startButton);
+            stopButton = view.findViewById(R.id.stopButton);
+            pauseButton = view.findViewById(R.id.pauseButton);
+            lapButton = view.findViewById(R.id.lapButton);
+            resetButton = view.findViewById(R.id.resetButton);
 
             // Установите начальное состояние кнопок
             startButton.setEnabled(true);
@@ -86,17 +90,19 @@
                 }
             });
 
-
-            Button backButton = findViewById(R.id.backButton);
+            Button backButton = view.findViewById(R.id.backButton);
             backButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onBackPressed();
+                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, new ClockFragment());
+                    transaction.addToBackStack(null);  // Добавьте эту строку, чтобы фрагмент можно было вернуть кнопкой "назад"
+                    transaction.commit();
                 }
             });
+
+            return view;
         }
-
-
 
         private void startTimer() {
             if (isServiceBound) {
@@ -138,11 +144,11 @@
             lapTimes.add(lapTime);
 
             String lapTimeStr = formatTime(lapTime);
-            TextView lapList = findViewById(R.id.lapList);
+            TextView lapList = requireView().findViewById(R.id.lapList);
             lapList.append("Коло " + lapNumber + ": " + lapTimeStr + "\n");
             lapNumber++;
 
-            final ScrollView lapListScrollView = findViewById(R.id.lapListScrollView);
+            final ScrollView lapListScrollView = requireView().findViewById(R.id.lapListScrollView);
             lapListScrollView.post(new Runnable() {
                 @Override
                 public void run() {
@@ -152,25 +158,25 @@
         }
 
         @Override
-        protected void onStart() {
+        public void onStart() {
             super.onStart();
             bindTimerService();
         }
 
         @Override
-        protected void onStop() {
+        public void onStop() {
             super.onStop();
             unbindTimerService();
         }
 
         private void bindTimerService() {
-            Intent intent = new Intent(this, TimerService.class);
-            bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+            Intent intent = new Intent(requireActivity(), TimerService.class);
+            requireActivity().bindService(intent, serviceConnection, Activity.BIND_AUTO_CREATE);
         }
 
         private void unbindTimerService() {
             if (isServiceBound) {
-                unbindService(serviceConnection);
+                requireActivity().unbindService(serviceConnection);
                 isServiceBound = false;
                 timerService = null; // Установите timerService в null после отвязки службы
             }
@@ -181,7 +187,7 @@
             public void onServiceConnected(ComponentName name, IBinder service) {
                 TimerService.TimerBinder binder = (TimerService.TimerBinder) service;
                 timerService = binder.getService();
-                timerService.registerObserver(TimerActivity.this);
+                timerService.registerObserver(TimerFragment.this);
                 isServiceBound = true;
 
                 // После успешной привязки, установите кнопки в службе
@@ -190,7 +196,7 @@
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                timerService.unregisterObserver(TimerActivity.this);
+                timerService.unregisterObserver(TimerFragment.this);
                 isServiceBound = false;
                 timerService = null; // Установите timerService в null при отвязке службы
             }

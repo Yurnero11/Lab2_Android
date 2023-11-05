@@ -12,13 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class ClockActivity extends Fragment {
+public class ClockFragment extends Fragment {
     private TextView textClock;
     private TextView textDate;
     private TextView textTimeZone;
@@ -45,17 +46,21 @@ public class ClockActivity extends Fragment {
             public void onClick(View v) {
                 // Переход на экран таймера
                 // Здесь вам нужно будет использовать активность (Activity) для навигации
-                Intent intent = new Intent(getActivity(), TimerActivity.class);
-                startActivity(intent);
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new TimerFragment());
+                transaction.addToBackStack(null);  // Добавьте эту строку, чтобы фрагмент можно было вернуть кнопкой "назад"
+                transaction.commit();
             }
         });
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Переход на экран настроек (SettingsActivity)
-                Intent intent = new Intent(getActivity(), SettingsFragment.class);
-                startActivity(intent);
+                // Заменить текущий фрагмент на SettingsFragment
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new SettingsFragment());
+                transaction.addToBackStack(null);  // Добавьте эту строку, чтобы фрагмент можно было вернуть кнопкой "назад"
+                transaction.commit();
             }
         });
 
